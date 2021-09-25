@@ -3,11 +3,9 @@ import './App.scss';
 import Task from './Task/Task';
 
 function App() {
-
-
+  //Check du localstorage
   function checkLocalTodos(){
     let localTodos = localStorage.getItem("todoListV1");
-  
     if (localTodos) {
       let parseTodo = JSON.parse(localTodos)
       return parseTodo;
@@ -15,10 +13,10 @@ function App() {
       return ([]);
     };
   }
-
+  //les states
   const [task , setTask] = useState({task : "", type : "home", etat : "en cours"});
   const [todosList, setTodosList] = useState(checkLocalTodos());
-
+  //les handles des inputs / select et button valider
   function handleInput(e) {
     setTask({...task, task : e.target.value});
   }
@@ -31,12 +29,12 @@ function App() {
     setTodosList([...todosList, task]);
     document.getElementById("tache").value = "";
   }
-
+  //useEffect sur le tableau des taches, qui refresh avec le localstorage
+  //a chaque changement du tableau le localStorage est mis a jour
   useEffect(() => {
     localStorage.setItem("todoListV1", JSON.stringify(todosList));
-    console.log(localStorage.getItem("todoListV1"));
   }, [todosList]);
-
+  //Fonction pour donner du style au div crées dans la fonction filtre
   function setStyle(value){
     if (value === "home") {
       return ("home");
@@ -46,19 +44,19 @@ function App() {
       return ("admin")
     }
   }
-
-
-  function getTaskInProgresse(){
+  //Fonction générique de filtrage pour etat des taches
+  function getTaskByEtat(valeur){
     let result = todosList.map((todo, key) => {
-      if (todo.etat === "en cours") {
+      if (todo.etat === valeur) {
         return (
+          //appel de la fonction pour le style
+          //ligne 58 = ternaire (il else en ligne) qui affiche ou pas un button selon l'etat de la tache,
+          //et appel de la function qui change la valeur a l'interieur du boutton selon l'etat de la tache
           <div key={key} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
             <p>{todo.type}</p>
-            <button onClick={() => switchToTerminée(todo)}>
-              Terminer !
-            </button>
-          </div>
+            {(todo.etat === "en cours" || todo.etat === "done") ? <button onClick={() => switchTo(todo, valeur)}> {setButton(todo.etat)} </button> : <p></p>} 
+            </div>        
         );
       } else {
         return <div key={key}></div>
@@ -66,13 +64,28 @@ function App() {
     });
     return result;
   };
-
-  function switchToTerminée(todoTask){
+  //Fonction que change le contenu du boutton
+  function setButton(valeur){
+    if (valeur === "en cours") {
+        return "Terminer !"
+    } else {
+        return "Supprimer !"
+    }
+  }
+  //Fonction on click sur les boutons des post it
+  //et qui change leurs etats
+  function switchTo(todoTask, valeur){
+    let newvaleur ="";
+    if (valeur === "en cours") {
+      newvaleur = "done";
+    } else if (valeur === "done") {
+      newvaleur = "delete"
+    }
     let result = setTodosList((todosList) =>
       todosList.map((item) => {
         if (item === todoTask) {
           return (
-            {...item, etat: "done"}
+            {...item, etat: newvaleur}
             )
         } else {
           return item
@@ -80,59 +93,8 @@ function App() {
       })
     );
     return result;        
-  }
-
-  function switchToDelete(todoTask){
-    let result = setTodosList((todosList) =>
-      todosList.map((item) => {
-        if (item === todoTask) {
-          return (
-            {...item, etat: "delete"}
-            )
-        } else {
-          return item
-        }
-      })
-    );
-    return result;        
-  }
-  
-  function getTaskDone(){
-    let result = todosList.map((todo, key) => {
-      if (todo.etat === 'done') {
-        return (
-          <div key={key} className={"item " + setStyle(todo.type)}>
-            <p>{todo.task}</p>
-            <p>{todo.type}</p>
-            <button onClick={() => switchToDelete(todo)}>
-              Supprimer !
-            </button>
-          </div>
-        );
-      } else {
-        return <div key={key}></div>
-      }
-    });
-    return result;
-    
-  };
-  function getTaskDelete(){
-    let result = todosList.map((todo, key) => {
-      if (todo.etat === 'delete') {
-        return (
-          <div key={key} className={"item " + setStyle(todo.type)}>
-            <p>{todo.task}</p>
-            <p>{todo.type}</p>
-          </div>
-        );
-      } else {
-        return <div key={key}></div>
-      }
-    });
-    return result;
-    
-  };
-
+  }  
+  //Fonction on click sur le btn reset
   function handleReset() {
   let response = prompt("Voulez vous vraiment supprimer toute vous taches ?\n \"OUI\" ou \"NON\"");
     checkResponse(response);    
@@ -165,9 +127,9 @@ function App() {
         </div>
       </div>
       <Task 
-        task={getTaskInProgresse()}
-        taskDone={getTaskDone()}
-        taskDelete={getTaskDelete()}
+        task={getTaskByEtat("en cours")}
+        taskDone={getTaskByEtat("done")}
+        taskDelete={getTaskByEtat("delete")}
       />
     </div>
   );

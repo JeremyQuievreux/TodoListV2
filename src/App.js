@@ -3,11 +3,9 @@ import './App.scss';
 import Task from './Task/Task';
 
 function App() {
-
-
+  //Check du localStorage
   function checkLocalTodos(){
     let localTodos = localStorage.getItem("todoListV1");
-  
     if (localTodos) {
       let parseTodo = JSON.parse(localTodos)
       return parseTodo;
@@ -15,10 +13,10 @@ function App() {
       return ([]);
     };
   }
-
+  //Creation des states
   const [task , setTask] = useState({task : "", type : "home", etat : "en cours"});
   const [todosList, setTodosList] = useState(checkLocalTodos());
-
+  //Fonction sur les inputs/select et btn valider
   function handleInput(e) {
     setTask({...task, task : e.target.value});
   }
@@ -31,12 +29,11 @@ function App() {
     setTodosList([...todosList, task]);
     document.getElementById("tache").value = "";
   }
-
+  //useEffect qui mets a jour le localStorage a tous changement de la liste de taches
   useEffect(() => {
     localStorage.setItem("todoListV1", JSON.stringify(todosList));
-    console.log(localStorage.getItem("todoListV1"));
   }, [todosList]);
-
+  //Fonction de mise en style des post it
   function setStyle(value){
     if (value === "home") {
       return ("home");
@@ -46,8 +43,8 @@ function App() {
       return ("admin")
     }
   }
-
-
+  //Fonctions de trie des taches
+    //en cours
   function getTaskInProgresse(){
     let result = todosList.map((todo, key) => {
       if (todo.etat === "en cours") {
@@ -66,37 +63,7 @@ function App() {
     });
     return result;
   };
-
-  function switchToTerminée(todoTask){
-    let result = setTodosList((todosList) =>
-      todosList.map((item) => {
-        if (item === todoTask) {
-          return (
-            {...item, etat: "done"}
-            )
-        } else {
-          return item
-        }
-      })
-    );
-    return result;        
-  }
-
-  function switchToDelete(todoTask){
-    let result = setTodosList((todosList) =>
-      todosList.map((item) => {
-        if (item === todoTask) {
-          return (
-            {...item, etat: "delete"}
-            )
-        } else {
-          return item
-        }
-      })
-    );
-    return result;        
-  }
-  
+  // terminée
   function getTaskDone(){
     let result = todosList.map((todo, key) => {
       if (todo.etat === 'done') {
@@ -116,6 +83,7 @@ function App() {
     return result;
     
   };
+  // supprimée
   function getTaskDelete(){
     let result = todosList.map((todo, key) => {
       if (todo.etat === 'delete') {
@@ -132,7 +100,38 @@ function App() {
     return result;
     
   };
-
+  //Fonctions de changement de catégorie au clique
+  // de "en cours" a "done"
+  function switchToTerminée(todoTask){
+    let result = setTodosList((todosList) =>
+      todosList.map((item) => {
+        if (item === todoTask) {
+          return (
+            {...item, etat: "done"}
+            )
+        } else {
+          return item
+        }
+      })
+    );
+    return result;        
+  }
+  // de "done" à "delete"
+  function switchToDelete(todoTask){
+    let result = setTodosList((todosList) =>
+      todosList.map((item) => {
+        if (item === todoTask) {
+          return (
+            {...item, etat: "delete"}
+            )
+        } else {
+          return item
+        }
+      })
+    );
+    return result;        
+  }
+  //Fonction de reset localstorage
   function handleReset() {
   let response = prompt("Voulez vous vraiment supprimer toute vous taches ?\n \"OUI\" ou \"NON\"");
     checkResponse(response);    
