@@ -1,0 +1,38 @@
+.task-container{
+    display: flex;
+    .en-cours{
+        border-right: 2px solid black;
+        flex: 1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+    }
+    .done{
+        flex: 1;
+        text-align: center;
+        border-right: 2px solid black;
+
+    }
+    .delete{
+        flex: 1;
+        text-align: center;
+    }
+}
+
+.items{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.home{
+    background-color: pink;
+}
+
+.hobbie{
+    background-color: yellow;
+}
+
+.admin {
+    background-color: yellowgreen;
+}
