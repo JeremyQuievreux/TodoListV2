@@ -51,7 +51,6 @@ function App() {
         return (
           <div key={key} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
-            <p>{todo.type}</p>
             <button onClick={() => switchToTerminée(todo)}>
               Terminer !
             </button>
@@ -70,7 +69,6 @@ function App() {
         return (
           <div key={key} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
-            <p>{todo.type}</p>
             <button onClick={() => switchToDelete(todo)}>
               Supprimer !
             </button>
@@ -90,7 +88,6 @@ function App() {
         return (
           <div key={key} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
-            <p>{todo.type}</p>
           </div>
         );
       } else {
