@@ -1,0 +1,54 @@
+$primary : #b39ddb;
+$secondary : #836fa9;
+$tier : #e6ceff;
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body{
+  background-color: $primary;
+}
+
+header{
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $secondary;
+  border-bottom: 4px solid $tier;
+}
+.container{
+  height: 60px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  .formulaire{
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    #tache{
+      width: 300px;
+      padding-left: 20px;
+    }
+  }
+}
+
+.item{
+  width: 200px;
+  height: 200px;
+  border: 2px solid black;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  button{
+    position: absolute;
+    bottom: 10px;
+
+  }
+}
