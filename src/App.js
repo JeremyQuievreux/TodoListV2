@@ -156,8 +156,8 @@ function App() {
             <option value="hobbie">Loisir</option>
             <option value="admin">Administration</option>
           </select>
-          <button onClick={handleClick}>Ajouter</button>
-          <button onClick={handleReset} >Reset LocalStorage</button>
+          <button id="add-btn" onClick={handleClick}>Ajouter</button>
+          <button id="reset-btn" onClick={handleReset} >Reset LocalStorage</button>
         </div>
       </div>
       <Task 

@@ -26,12 +26,32 @@ header{
   justify-content: space-around;
   align-items: center;
   .formulaire{
-    width: 40%;
+    width: 50%;
     display: flex;
     justify-content: space-around;
+    select{
+      text-align: center;
+    }
     #tache{
       width: 300px;
       padding-left: 20px;
+    }
+    #add-btn, #reset-btn{
+      background-color: #836fa9;
+      color: #e6ceff;
+      border: 2px solid $tier;
+      height: 30px;
+      &:hover{
+        background-color: $tier;
+        color: $secondary;
+        border-color: $secondary;
+      }
+    }
+    #add-btn{
+      width: 70px;
+    }
+    #reset-btn{
+      width: 150px;
     }
   }
 }
