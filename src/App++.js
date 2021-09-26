@@ -46,20 +46,20 @@ function App() {
   }
   //Fonction générique de filtrage pour etat des taches
   function getTaskByEtat(valeur){
-    let result = todosList.map((todo, key) => {
+    let result = todosList.map((todo) => {
       if (todo.etat === valeur) {
         return (
           //appel de la fonction pour le style
           //ligne 58 = ternaire (il else en ligne) qui affiche ou pas un button selon l'etat de la tache,
           //et appel de la function qui change la valeur a l'interieur du boutton selon l'etat de la tache
-          <div key={key} className={"item " + setStyle(todo.type)}>
+          <div key={todo.id} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
             <p>{todo.type}</p>
             {(todo.etat === "en cours" || todo.etat === "done") ? <button onClick={() => switchTo(todo, valeur)}> {setButton(todo.etat)} </button> : <p></p>} 
             </div>        
         );
       } else {
-        return <div key={key}></div>
+        return <div key={todo.id}></div>
       }
     });
     return result;
