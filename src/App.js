@@ -46,10 +46,10 @@ function App() {
   //Fonctions de trie des taches
     //en cours
   function getTaskInProgresse(){
-    let result = todosList.map((todo, key) => {
+    let result = todosList.map((todo) => {
       if (todo.etat === "en cours") {
         return (
-          <div key={key} className={"item " + setStyle(todo.type)}>
+          <div key={todo.id} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
             <button onClick={() => switchToTerminée(todo)}>
               Terminer !
@@ -57,17 +57,17 @@ function App() {
           </div>
         );
       } else {
-        return <div key={key}></div>
+        return <div key={todo.id}></div>
       }
     });
     return result;
   };
   // terminée
   function getTaskDone(){
-    let result = todosList.map((todo, key) => {
+    let result = todosList.map((todo) => {
       if (todo.etat === 'done') {
         return (
-          <div key={key} className={"item " + setStyle(todo.type)}>
+          <div key={todo.id} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
             <button onClick={() => switchToDelete(todo)}>
               Supprimer !
@@ -75,7 +75,7 @@ function App() {
           </div>
         );
       } else {
-        return <div key={key}></div>
+        return <div key={todo.id}></div>
       }
     });
     return result;
@@ -83,15 +83,15 @@ function App() {
   };
   // supprimée
   function getTaskDelete(){
-    let result = todosList.map((todo, key) => {
+    let result = todosList.map((todo) => {
       if (todo.etat === 'delete') {
         return (
-          <div key={key} className={"item " + setStyle(todo.type)}>
+          <div key={todo.id} className={"item " + setStyle(todo.type)}>
             <p>{todo.task}</p>
           </div>
         );
       } else {
-        return <div key={key}></div>
+        return <div key={todo.id}></div>
       }
     });
     return result;
